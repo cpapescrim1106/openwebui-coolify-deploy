@@ -201,3 +201,6 @@ ENV WEBUI_BUILD_VERSION=${BUILD_HASH}
 ENV DOCKER=true
 
 CMD [ "bash", "start.sh"]
+
+# Disable broken upstream healthcheck for Coolify image-based deployment
+HEALTHCHECK NONE
