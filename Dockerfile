@@ -202,5 +202,5 @@ ENV DOCKER=true
 
 CMD [ "bash", "start.sh"]
 
-# Disable broken upstream healthcheck for Coolify image-based deployment
-HEALTHCHECK NONE
+# Restore runtime health check for Coolify/container health parsing
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=5 CMD curl --silent --fail http://localhost:${PORT:-8080}/health | jq -ne 'input.status == true' || exit 1
