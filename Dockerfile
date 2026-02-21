@@ -203,4 +203,4 @@ ENV DOCKER=true
 CMD [ "bash", "start.sh"]
 
 # Restore runtime health check for Coolify/container health parsing
-HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=10 CMD curl -fsS http://localhost:${PORT:-8080}/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=10 CMD curl -fsS http://localhost:8080/health || exit 1
