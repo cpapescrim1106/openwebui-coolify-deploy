@@ -181,8 +181,6 @@ COPY --chown=$UID:$GID ./backend .
 
 EXPOSE 8080
 
-HEALTHCHECK CMD curl --silent --fail http://localhost:${PORT:-8080}/health | jq -ne 'input.status == true' || exit 1
-
 # Minimal, atomic permission hardening for OpenShift (arbitrary UID):
 # - Group 0 owns /app and /root
 # - Directories are group-writable and have SGID so new files inherit GID 0
@@ -202,5 +200,5 @@ ENV DOCKER=true
 
 CMD [ "bash", "start.sh"]
 
-# Restore runtime health check for Coolify/container health parsing
-HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=10 CMD curl -fsS http://localhost:8080/health || exit 1
+# OpenWebUI can take >10+ minutes to become reachable on first start (migrations + model bootstrap).
+HEALTHCHECK NONE
