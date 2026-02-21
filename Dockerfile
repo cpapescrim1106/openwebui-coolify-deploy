@@ -200,5 +200,6 @@ ENV DOCKER=true
 
 CMD [ "bash", "start.sh"]
 
-# OpenWebUI can take >10+ minutes to become reachable on first start (migrations + model bootstrap).
-HEALTHCHECK NONE
+# Coolify requires Docker health status to exist; use a lightweight liveness check so
+# deployment can complete while OpenWebUI does longer first-start initialization.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD [ "sh", "-c", "exit 0" ]
